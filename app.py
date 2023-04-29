@@ -37,7 +37,7 @@ def github_search(query):
 def add_short_term_memory(short_term_memory, user_input, chatgpt_response):
     return f'{short_term_memory} User: {user_input} ChatGPT: {chatgpt_response}'
 
-def search(query): ...
+def search(query): raise NotImplementedError()
 st.title("ChatGPT App")
 short_term_memory = ""
 model = st.sidebar.selectbox("Select OpenAI model", ("text-davinci-002", "text-davinci-003"))
