@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from github import Github
 from google.oauth2 import service_account
 
-from chatgpt_api import get_response, recall, remember
+from chatgpt_api import get_response, recall, remember, save_file, read_file, delete_file
 
 load_dotenv()
 
@@ -30,7 +30,6 @@ search_engines = {
     },
 }
 
-
 # Google Custom Search API
 def google_search(query):
     service = googleapiclient.discovery.build(
@@ -39,13 +38,11 @@ def google_search(query):
         q=query, cx=search_engines["google"]["cse_id"]).execute())
     return result["items"]
 
-
 # Bing Search API
 def bing_search(query):
     bing = BingSearch(search_engines["bing"]["api_key"])
     results = bing.search(query)
     return results["webPages"]["value"]
-
 
 # Github Search API
 def github_search(query):
@@ -53,11 +50,9 @@ def github_search(query):
     results = github.search_repositories(query)
     return results
 
-
 # Add short term memory
 def add_short_term_memory(short_term_memory, user_input, chatgpt_response):
     return f"{short_term_memory}\nUser: {user_input}\nChatGPT: {chatgpt_response}"
-
 
 # Function to handle user input
 def handle_input(short_term_memory):
@@ -84,4 +79,14 @@ def handle_input(short_term_memory):
             short_term_memory = add_short_term_memory(short_term_memory,
                                                       user_input,
                                                       chatgpt_response)
-            return short
+            # Save the response to a file
+            save_file("response.txt", chatgpt_response)
+
+            # Read the content of the saved file
+            content = read_file("response.txt")
+            st.write("Content from file:", content)
+
+            # Delete the saved file
+            delete_file("response.txt")
+
+            return short_term_memory
