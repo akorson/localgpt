@@ -1,13 +1,9 @@
 import os
 from dotenv import load_dotenv
 import streamlit as st
-import requests
-from chatgpt_api import get_response, remember, recall
 import googleapiclient.discovery
-from google.oauth2 import service_account
 from bing_search_api_v7 import BingSearch
 from github import Github
-import json
 
 load_dotenv()
 
