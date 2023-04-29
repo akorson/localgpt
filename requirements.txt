@@ -1,3 +1,4 @@
+mongoengine
 streamlit
 openai
 pymongo
