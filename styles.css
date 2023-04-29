@@ -1,65 +1,64 @@
 body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #181818;
-    color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  h1 {
-    font-size: 3em;
-    font-weight: 300;
-    text-align: center;
-    color: #ec407a;
-    margin-bottom: 30px;
-  }
-  
-  input {
-    width: 100%;
-    padding: 15px 25px;
-    font-size: 1.2em;
-    background-color: #2c2c2c;
-    border: none;
-    border-radius: 5px;
-    color: #f0f0f0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  button {
-    display: block;
-    width: 100%;
-    padding: 15px 25px;
-    font-size: 1.2em;
-    background-color: #1976d2;
-    border: none;
-    border-radius: 5px;
-    color: #f0f0f0;
-    cursor: pointer;
-    margin-top: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s ease;
-  }
-  
-  button:hover {
-    background-color: #1565c0;
-  }
-  
-  output {
-    display: block;
-    width: 100%;
-    padding: 20px;
-    font-size: 1.2em;
-    background-color: #2c2c2c;
-    border-radius: 5px;
-    color: #f0f0f0;
-    margin-top: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background-color: #181818;
+  color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3em;
+  font-weight: 300;
+  text-align: center;
+  color: #ec407a;
+  margin-bottom: 30px;
+}
+
+input {
+  width: 100%;
+  padding: 15px 25px;
+  font-size: 1.2em;
+  background-color: #2c2c2c;
+  border: none;
+  border-radius: 5px;
+  color: #f0f0f0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 15px 25px;
+  font-size: 1.2em;
+  background-color: #1976d2;
+  border: none;
+  border-radius: 5px;
+  color: #f0f0f0;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+
+output {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  font-size: 1.2em;
+  background-color: #2c2c2c;
+  border-radius: 5px;
+  color: #f0f0f0;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
