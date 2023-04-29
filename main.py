@@ -4,7 +4,7 @@ import streamlit as st
 from dotenv import load_dotenv
 from search_engines import bing_search, github_search, google_search
 
-from chatgpt_api import get_response, recall, remember
+from chatgpt_api import get_response, recall, remember, save_file, read_file, delete_file
 
 load_dotenv()
 
@@ -54,3 +54,12 @@ with st.form("chat_form"):
             short_term_memory = add_short_term_memory(short_term_memory,
                                                       user_input,
                                                       chatgpt_response)
+            # Save the response to a file
+            save_file("response.txt", chatgpt_response)
+
+            # Read the content of the saved file
+            content = read_file("response.txt")
+            st.write("Content from file:", content)
+
+            # Delete the saved file
+            delete_file("response.txt")
