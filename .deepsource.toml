@@ -1,0 +1,22 @@
+version = 1
+
+[[analyzers]]
+name = "cxx"
+
+[[analyzers]]
+name = "javascript"
+
+  [analyzers.meta]
+  environment = ["mongo"]
+
+[[analyzers]]
+name = "python"
+
+  [analyzers.meta]
+  runtime_version = "3.x.x"
+
+[[transformers]]
+name = "prettier"
+
+[[transformers]]
+name = "standardjs"
