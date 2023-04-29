@@ -15,9 +15,14 @@ def index():
 
 @app.route("/api/process_data", methods=["POST"])
 def process_data():
-    input_data = request.json["inputData"]
-    response = process_input_data(input_data)
-    return jsonify(response)
+    try:
+        input_data = request.json["inputData"]
+        response = process_input_data(input_data)
+        return jsonify(response), 200
+    except KeyError:
+        return jsonify({"error": "Input data not found"}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
