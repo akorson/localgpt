@@ -1,17 +1,22 @@
-from flask import Flask, render_template, request, jsonify
-from chatgpt_api import process_input_data
 import os
+
+from dotenv import load_dotenv
+from flask import Flask, jsonify, render_template, request
+
+from chatgpt_api import process_input_data
 
 app = Flask(__name__)
 
 # Load environment variables from .env file
-from dotenv import load_dotenv
+
 load_dotenv()
+
 
 # Routes
 @app.route("/")
 def index():
     return render_template("index.html")
+
 
 @app.route("/api/process_data", methods=["POST"])
 def process_data():
@@ -23,6 +28,7 @@ def process_data():
         return jsonify({"error": "Input data not found"}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)
