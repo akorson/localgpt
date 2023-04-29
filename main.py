@@ -1,4 +1,3 @@
-import os
 from dotenv import load_dotenv
 import streamlit as st
 from chatgpt_api import get_response, remember, recall
