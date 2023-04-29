@@ -5,7 +5,14 @@ from dotenv import load_dotenv
 from mongoengine import connect, disconnect
 from search_engines import bing_search, github_search, google_search
 
-from chatgpt_api import get_response, recall, remember, save_file, read_file, delete_file
+from chatgpt_api import (
+    delete_file,
+    get_response,
+    read_file,
+    recall,
+    remember,
+    save_file,
+)
 
 load_dotenv()
 
@@ -17,18 +24,20 @@ st.set_page_config(page_title="ChatGPT App", page_icon=":speech_balloon:")
 st.title("ChatGPT App")
 
 short_term_memory = ""
-model = st.sidebar.selectbox("Select OpenAI model", ("text-davinci-002", "text-davinci-003"))
+model = st.sidebar.selectbox("Select OpenAI model",
+                             ("text-davinci-002", "text-davinci-003"))
 recall_conversations = st.sidebar.checkbox("Recall previous conversations")
 
 if recall_conversations:
     st.sidebar.write("Previous conversations:")
     for convo in recall():
         st.sidebar.write(
-            f"User: {convo['prompt']} \nChatGPT: {convo['response']}"
-        )
+            f"User: {convo['prompt']} \nChatGPT: {convo['response']}")
+
 
 def add_short_term_memory(memory, input_msg, output_msg):
     return f"{memory}\nUser: {input_msg}\nChatGPT: {output_msg}"
+
 
 with st.form("chat_form"):
     user_input = st.text_input("Type your message:")
@@ -49,10 +58,14 @@ with st.form("chat_form"):
                     for result in results
                 ]
         else:
-            chatgpt_response = get_response(user_input, short_term_memory, model=model)
+            chatgpt_response = get_response(user_input,
+                                            short_term_memory,
+                                            model=model)
             st.write("User:", user_input, "\nChatGPT:", chatgpt_response)
             remember(user_input, chatgpt_response)
-            short_term_memory = add_short_term_memory(short_term_memory, user_input, chatgpt_response)
+            short_term_memory = add_short_term_memory(short_term_memory,
+                                                      user_input,
+                                                      chatgpt_response)
             save_file("response.txt", chatgpt_response)
 
             content = read_file("response.txt")
