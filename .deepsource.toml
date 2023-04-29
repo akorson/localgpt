@@ -20,3 +20,15 @@ name = "prettier"
 
 [[transformers]]
 name = "standardjs"
+
+[[transformers]]
+name = "autopep8"
+
+[[transformers]]
+name = "black"
+
+[[transformers]]
+name = "yapf"
+
+[[transformers]]
+name = "isort"
