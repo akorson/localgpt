@@ -2,13 +2,22 @@ import os
 
 import streamlit as st
 from dotenv import load_dotenv
-from mongoengine import connect as mongoengine_connect, disconnect as mongoengine_disconnect
+from mongoengine import connect as mongoengine_connect
+from mongoengine import disconnect as mongoengine_disconnect
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 from search_engines import bing_search, github_search, google_search
 
-from chatgpt_api import (get_response, recall, recall_mongoengine,
-                         remember, remember_mongoengine, save_file, read_file, delete_file)
+from chatgpt_api import (
+    delete_file,
+    get_response,
+    read_file,
+    recall,
+    recall_mongoengine,
+    remember,
+    remember_mongoengine,
+    save_file,
+)
 
 load_dotenv()
 
@@ -17,17 +26,19 @@ try:
     client = MongoClient(os.environ["MONGO_URI"])
     db = client[os.environ["MONGO_DB_NAME"]]
 except PyMongoError:
-    st.error("Error connecting to the database using pymongo. Please check the connection details.")
+    st.error(
+        "Error connecting to the database using pymongo. Please check the connection details."
+    )
 
 # Connect to MongoDB using mongoengine
 try:
-    mongoengine_connect(
-        db=os.environ["MONGO_DB_NAME"],
-        host=os.environ["MONGO_URI"],
-        alias="default"
-    )
+    mongoengine_connect(db=os.environ["MONGO_DB_NAME"],
+                        host=os.environ["MONGO_URI"],
+                        alias="default")
 except PyMongoError:
-    st.error("Error connecting to the database using mongoengine. Please check the connection details.")
+    st.error(
+        "Error connecting to the database using mongoengine. Please check the connection details."
+    )
 
 st.set_page_config(page_title="ChatGPT App", page_icon=":speech_balloon:")
 st.title("ChatGPT App")
@@ -46,8 +57,10 @@ if recall_conversations:
         st.sidebar.write(
             f"User: {convo['prompt']} \nChatGPT: {convo['response']}")
 
+
 def add_short_term_memory(memory, input_msg, output_msg):
     return f"{memory}\nUser: {input_msg}\nChatGPT: {output_msg}"
+
 
 with st.form("chat_form"):
     user_input = st.text_input("Type your message:")
