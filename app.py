@@ -43,8 +43,5 @@ short_term_memory = ""
 model = st.sidebar.selectbox("Select OpenAI model", ("text-davinci-002", "text-davinci-003"))
 recall_conversations = st.sidebar.checkbox("Recall previous conversations")
 
-if recall_conversations: ...
-
 while True:
     user_input = st.text_input("Type your message:")
-    if st.button("Send"): ...
