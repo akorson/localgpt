@@ -1,7 +1,7 @@
 import os
 import googleapiclient.discovery
 from google.oauth2 import service_account
-from bing import Bing
+import requests
 from github import Github
 
 def google_search(query):
@@ -14,8 +14,11 @@ def google_search(query):
 
 def bing_search(query):
     api_key = os.environ["BING_API_KEY"]
-    bing = Bing(api_key)
-    results = bing.search(query)
+    url = "https://api.bing.microsoft.com/v7.0/search"
+    headers = {"Ocp-Apim-Subscription-Key": api_key}
+    params = {"q": query}
+    response = requests.get(url, headers=headers, params=params)
+    results = response.json()
     return results["webPages"]["value"]
 
 def github_search(query):

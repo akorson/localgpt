@@ -13,14 +13,17 @@ class ChatHistory(Document):
     response = StringField(required=True)
 
 # Get response from OpenAI API
-def get_response(prompt, context, model="text-davinci-002"):
+def get_response(prompt, context, model="code-x-002", turbo=False):
+    if turbo:
+        model = "3.5-turbo"
+
     completions = openai.Completion.create(
         engine=model,
         prompt=f"{context}\nUser: {prompt}\nChatGPT:",
         max_tokens=100,
         n=1,
         stop=None,
-        temperature=0.7,
+        temperature=0,
     )
 
     message = completions.choices[0].text.strip()
@@ -32,7 +35,7 @@ def remember(prompt, response):
     chat_history.save()
 
 # Recall the chat history using mongoengine
-def recall_mongoengine():
+def recall():
     return ChatHistory.objects.all()
 
 # Save content to a file

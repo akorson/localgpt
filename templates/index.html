@@ -7,19 +7,20 @@
   </head>
   <body>
     <div id="chat-container">
-      <div id="chat-output"></div>
-      <form id="chat-form">
+      <div id="chat-output" aria-live="polite" role="log"></div>
+      <form id="chat-form" aria-label="Chat form">
         <label for="chat-input">Type your message:</label>
         <input
           type="text"
           id="chat-input"
           autocomplete="off"
           maxlength="2048"
+          aria-describedby="character-count"
         />
-        <span id="character-count">0</span>/2048
+        <span id="character-count">0</span>/2048 characters
         <button id="submit-button" type="submit">Send</button>
       </form>
     </div>
-    <script src="main.js"></script>
+    <script src="main.js" aria-label="JavaScript file"></script>
   </body>
 </html>
