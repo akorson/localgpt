@@ -1,8 +1,7 @@
-# search_engines.py
 import os
 import googleapiclient.discovery
 from google.oauth2 import service_account
-from bing_search_api_v7 import BingSearch
+from bing import Bing
 from github import Github
 
 def google_search(query):
@@ -15,7 +14,7 @@ def google_search(query):
 
 def bing_search(query):
     api_key = os.environ["BING_API_KEY"]
-    bing = BingSearch(api_key)
+    bing = Bing(api_key)
     results = bing.search(query)
     return results["webPages"]["value"]
 
