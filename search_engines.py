@@ -26,3 +26,14 @@ def github_search(query):
     github = Github(access_token)
     results = github.search_repositories(query)
     return results
+
+def search_all(query):
+    google_results = google_search(query)
+    bing_results = bing_search(query)
+    github_results = github_search(query)
+
+    return {
+        "google_results": google_results,
+        "bing_results": bing_results,
+        "github_results": github_results
+    }
