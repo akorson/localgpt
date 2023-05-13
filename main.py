@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from mongoengine import connect
 from search_engines import bing_search, github_search, google_search
 import openai
-from chatgpt_api import get_response, recall, remember, save_file, read_file, delete_file
+from chatgpt_api import recall, remember, save_file, read_file, delete_file
 
 load_dotenv()
 MONGODB_URI = os.getenv("MONGODB_URI")
