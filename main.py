@@ -1,10 +1,12 @@
 import os
+
+import openai
 import streamlit as st
 from dotenv import load_dotenv
 from mongoengine import connect
+
+from chatgpt_api import delete_file, read_file, recall, remember, save_file
 from search_engines import bing_search, github_search, google_search
-import openai
-from chatgpt_api import recall, remember, save_file, read_file, delete_file
 
 load_dotenv()
 MONGODB_URI = os.getenv("MONGODB_URI")
@@ -19,7 +21,8 @@ db = connect("chatgpt", host=MONGODB_URI)
 st.set_page_config(page_title="ChatGPT App", page_icon=":speech_balloon:")
 st.title("ChatGPT App")
 
-st.markdown("""
+st.markdown(
+    """
 <style>
     body {
         font-family: 'Montserrat', sans-serif;
@@ -46,19 +49,25 @@ st.markdown("""
         color: #45CB85;
     }
 </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 short_term_memory = ""
-model = st.sidebar.selectbox("Select OpenAI model", ("gpt-3.5-turbo", "davinci-codex"))
+model = st.sidebar.selectbox(
+    "Select OpenAI model", ("gpt-3.5-turbo", "davinci-codex"))
 recall_conversations = st.sidebar.checkbox("Recall previous conversations")
 
 if recall_conversations:
     st.sidebar.write("Previous conversations:")
     for convo in recall():
-        st.sidebar.write(f"User: {convo['prompt']} \nChatGPT: {convo['response']}")
+        st.sidebar.write(
+            f"User: {convo['prompt']} \nChatGPT: {convo['response']}")
+
 
 def add_short_term_memory(memory, input_msg, output_msg):
     return f"{memory}\nUser: {input_msg}\nChatGPT: {output_msg}"
+
 
 with st.form("chat_form"):
     user_input = st.text_input("Type your message:")
@@ -68,31 +77,40 @@ with st.form("chat_form"):
         if "search" in user_input.lower():
             query = user_input.replace("search", "").strip()
             search_results = {
-                "google": google_search(query, GOOGLE_API_KEY, GOOGLE_CSE_ID), 
-                "bing": bing_search(query, BING_API_KEY), 
-                "github": github_search(query, GITHUB_ACCESS_TOKEN)
+                "google": google_search(query, GOOGLE_API_KEY, GOOGLE_CSE_ID),
+                "bing": bing_search(query, BING_API_KEY),
+                "github": github_search(query, GITHUB_ACCESS_TOKEN),
             }
             for engine, results in search_results.items():
                 st.write(f"{engine.capitalize()} Results:")
-                [st.write(f"- {result['title']} ({result['url']})") for result in results]
+                [
+                    st.write(f"- {result['title']} ({result['url']})")
+                    for result in results
+                ]
         else:
             prompt = [
                 {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": user_input}
+                {"role": "user", "content": user_input},
             ]
-            chatgpt_response = openai.Completion.create(
-                engine=model,
-                prompt=prompt,
-                max_tokens=1024,
-                temperature=0.1,
-                n=1,
-                stop=None,
-                presence_penalty=0.5,
-                frequency_penalty=0.5
-            ).choices[0].text.strip()
+            chatgpt_response = (
+                openai.Completion.create(
+                    engine=model,
+                    prompt=prompt,
+                    max_tokens=1024,
+                    temperature=0.1,
+                    n=1,
+                    stop=None,
+                    presence_penalty=0.5,
+                    frequency_penalty=0.5,
+                )
+                .choices[0]
+                .text.strip()
+            )
             st.write("User:", user_input, "\nChatGPT:", chatgpt_response)
             remember(user_input, chatgpt_response)
-            short_term_memory = add_short_term_memory(short_term_memory, user_input, chatgpt_response)
+            short_term_memory = add_short_term_memory(
+                short_term_memory, user_input, chatgpt_response
+            )
             save_file("response.txt", chatgpt_response)
             content = read_file("response.txt")
             st.write("Content from file:", content)
